@@ -62,13 +62,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun equalButtonClicked(clickedButton: Button) {
         var calcValue: TextView = findViewById(R.id.calc_value)
-        when(operation) {
-            "Add" -> { result = (result.toInt() + calcValue.text.toString().toInt()).toString() }
-            "Subtract" -> { result = (result.toInt() - calcValue.text.toString().toInt()).toString() }
-            "Multiply" -> { result = (result.toInt() * calcValue.text.toString().toInt()).toString() }
-            "Divide" -> { result = (result.toInt() / calcValue.text.toString().toInt()).toString() }
+
+        if(calcValue.text.toString() != "") {
+            when (operation) {
+                "Add" -> { result = (result.toInt() + calcValue.text.toString().toInt()).toString() }
+                "Subtract" -> { result = (result.toInt() - calcValue.text.toString().toInt()).toString() }
+                "Multiply" -> { result = (result.toInt() * calcValue.text.toString().toInt()).toString() }
+                "Divide" -> {
+                    if (calcValue.text.toString().toInt() != 0) {
+                        result = (result.toInt() / calcValue.text.toString().toInt()).toString()
+                    }
+                }
+            }
+            calcValue.text = result
         }
-        calcValue.text = result
     }
 
     private fun operatorButtonClicked(clickedButton: Button) {
