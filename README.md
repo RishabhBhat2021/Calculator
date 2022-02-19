@@ -3,8 +3,7 @@ My first Kotlin Android App
 
 Might be buggy but yeah my first Kotlin App
 
-divide by zero not handled
-performing operations on a empty 2nd term not handled
+divide by zero not handled and performing operations on a empty 2nd term not handled
 
 
 
