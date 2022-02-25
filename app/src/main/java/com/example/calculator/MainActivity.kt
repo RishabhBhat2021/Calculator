@@ -4,83 +4,66 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
+import com.example.calculator.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
     var operation: String = "None"
     var result: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        // All the Buttons
-        val button1: Button = findViewById(R.id.button_1)
-        val button2: Button = findViewById(R.id.button_2)
-        val button3: Button = findViewById(R.id.button_3)
-        val button4: Button = findViewById(R.id.button_4)
-        val button5: Button = findViewById(R.id.button_5)
-        val button6: Button = findViewById(R.id.button_6)
-        val button7: Button = findViewById(R.id.button_7)
-        val button8: Button = findViewById(R.id.button_8)
-        val button9: Button = findViewById(R.id.button_9)
-        val button0: Button = findViewById(R.id.button_0)
-        val buttonAdd: Button = findViewById(R.id.button_add)
-        val buttonSubtract: Button = findViewById(R.id.button_sub)
-        val buttonMultiply: Button = findViewById(R.id.button_multiply)
-        val buttonDivide: Button = findViewById(R.id.button_divide)
-        val buttonEqual: Button = findViewById(R.id.button_equal)
-        val buttonClear: Button = findViewById(R.id.button_clear)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         // Listeners for the Numbers
-        button0.setOnClickListener { numButtonClicked(button0) }
-        button1.setOnClickListener { numButtonClicked(button1) }
-        button2.setOnClickListener { numButtonClicked(button2) }
-        button3.setOnClickListener { numButtonClicked(button3) }
-        button4.setOnClickListener { numButtonClicked(button4) }
-        button5.setOnClickListener { numButtonClicked(button5) }
-        button6.setOnClickListener { numButtonClicked(button6) }
-        button7.setOnClickListener { numButtonClicked(button7) }
-        button8.setOnClickListener { numButtonClicked(button8) }
-        button9.setOnClickListener { numButtonClicked(button9) }
+        binding.button0.setOnClickListener { numButtonClicked(binding.button0) }
+        binding.button1.setOnClickListener { numButtonClicked(binding.button1) }
+        binding.button2.setOnClickListener { numButtonClicked(binding.button2) }
+        binding.button3.setOnClickListener { numButtonClicked(binding.button3) }
+        binding.button4.setOnClickListener { numButtonClicked(binding.button4) }
+        binding.button5.setOnClickListener { numButtonClicked(binding.button5) }
+        binding.button6.setOnClickListener { numButtonClicked(binding.button6) }
+        binding.button7.setOnClickListener { numButtonClicked(binding.button7) }
+        binding.button8.setOnClickListener { numButtonClicked(binding.button8) }
+        binding.button9.setOnClickListener { numButtonClicked(binding.button9) }
 
         // Listeners for the Operators
-        buttonAdd.setOnClickListener { operatorButtonClicked(buttonAdd) }
-        buttonSubtract.setOnClickListener { operatorButtonClicked(buttonSubtract) }
-        buttonMultiply.setOnClickListener { operatorButtonClicked(buttonMultiply) }
-        buttonDivide.setOnClickListener { operatorButtonClicked(buttonDivide) }
+        binding.buttonAdd.setOnClickListener { operatorButtonClicked(binding.buttonAdd) }
+        binding.buttonSub.setOnClickListener { operatorButtonClicked(binding.buttonSub) }
+        binding.buttonMultiply.setOnClickListener { operatorButtonClicked(binding.buttonMultiply) }
+        binding.buttonDivide.setOnClickListener { operatorButtonClicked(binding.buttonDivide) }
 
         // Listener for Equal Button
-        buttonEqual.setOnClickListener { equalButtonClicked(buttonAdd) }
+        binding.buttonEqual.setOnClickListener { equalButtonClicked() }
 
         // Listener for Clear Button
-        buttonClear.setOnClickListener { clearButtonClicked(buttonClear) }
+        binding.buttonClear.setOnClickListener { clearButtonClicked() }
     }
 
-    private fun clearButtonClicked(clickedButton: Button) {
-        var calcValue: TextView = findViewById(R.id.calc_value)
-        calcValue.text = ""
+    private fun clearButtonClicked() {
+        binding.calcValue.text = ""
     }
 
-    private fun equalButtonClicked(clickedButton: Button) {
-        var calcValue: TextView = findViewById(R.id.calc_value)
+    private fun equalButtonClicked() {
 
-        if(calcValue.text.toString() != "") {
+        if(binding.calcValue.text.toString() != "") {
             when (operation) {
-                "Add" -> { result = (result.toInt() + calcValue.text.toString().toInt()).toString() }
-                "Subtract" -> { result = (result.toInt() - calcValue.text.toString().toInt()).toString() }
-                "Multiply" -> { result = (result.toInt() * calcValue.text.toString().toInt()).toString() }
+                "Add" -> { result = (result.toFloat() + binding.calcValue.text.toString().toFloat()).toString() }
+                "Subtract" -> { result = (result.toFloat() - binding.calcValue.text.toString().toFloat()).toString() }
+                "Multiply" -> { result = (result.toFloat() * binding.calcValue.text.toString().toFloat()).toString() }
                 "Divide" -> {
-                    if (calcValue.text.toString().toInt() != 0) {
-                        result = (result.toInt() / calcValue.text.toString().toInt()).toString()
+                    if (binding.calcValue.text.toString().toFloat() != 0F) {
+                        result = (result.toFloat() / binding.calcValue.text.toString().toFloat()).toString()
                     }
                 }
             }
-            calcValue.text = result
+            binding.calcValue.text = result
         }
     }
 
     private fun operatorButtonClicked(clickedButton: Button) {
-        var calcView: TextView = findViewById(R.id.calc_value)
-        result = calcView.text.toString()
+        result = binding.calcValue.text.toString()
 
         when (clickedButton.text) {
             "+" -> { operation = "Add" }
@@ -88,11 +71,10 @@ class MainActivity : AppCompatActivity() {
             "*" -> { operation = "Multiply" }
             "/" -> { operation = "Divide"}
         }
-        calcView.text = ""
+        binding.calcValue.text = ""
     }
 
     private fun numButtonClicked(clickedButton: Button) {
-        var calcValue: TextView = findViewById(R.id.calc_value)
-        calcValue.text = calcValue.text.toString() + clickedButton.text.toString()
+        binding.calcValue.text = binding.calcValue.text.toString() + clickedButton.text.toString()
     }
 }
