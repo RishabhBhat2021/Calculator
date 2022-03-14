@@ -1,17 +1,17 @@
 package com.example.calculator
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.calculator.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    var operation: String = "None"
-    var result: String = ""
+    private var operation: String = "None"
+    private var result: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -49,12 +49,12 @@ class MainActivity : AppCompatActivity() {
 
         if(binding.calcValue.text.toString() != "") {
             when (operation) {
-                "Add" -> { result = (result.toFloat() + binding.calcValue.text.toString().toFloat()).toString() }
-                "Subtract" -> { result = (result.toFloat() - binding.calcValue.text.toString().toFloat()).toString() }
-                "Multiply" -> { result = (result.toFloat() * binding.calcValue.text.toString().toFloat()).toString() }
+                "Add" -> { result = (result.toDouble() + binding.calcValue.text.toString().toDouble()).toString() }
+                "Subtract" -> { result = (result.toDouble() - binding.calcValue.text.toString().toDouble()).toString() }
+                "Multiply" -> { result = (result.toDouble() * binding.calcValue.text.toString().toDouble()).toString() }
                 "Divide" -> {
-                    if (binding.calcValue.text.toString().toFloat() != 0F) {
-                        result = (result.toFloat() / binding.calcValue.text.toString().toFloat()).toString()
+                    if (binding.calcValue.text.toString().toDouble() != 0.toDouble()) {
+                        result = (result.toDouble() / binding.calcValue.text.toString().toDouble()).toString()
                     }
                 }
             }
